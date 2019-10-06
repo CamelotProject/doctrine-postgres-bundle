@@ -1,0 +1,15 @@
+doctrine:
+    dbal:
+        url: 'postgres://doctrine_postgres_bundle:doctrine_postgres_bundle@localhost/doctrine_postgres_bundle'
+
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+        mappings:
+            TestAppBundle:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/App/Entity'
+                prefix: 'Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity'
+                alias: TestAppBundle

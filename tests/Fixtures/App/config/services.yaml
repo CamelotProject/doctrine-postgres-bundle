@@ -1,0 +1,13 @@
+parameters:
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Camelot\DoctrinePostgres\:
+        resource: '../../../../src/*'
+        exclude: '../../../../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
