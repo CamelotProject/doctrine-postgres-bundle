@@ -11,10 +11,10 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "ext-pdo_pgsql": "*",
         "doctrine/dbal": "^2.9",
-        "doctrine/orm": "^2.6",
+        "doctrine/orm": "^2.6.4",
         "martin-georgiev/postgresql-for-doctrine": "^1.2"
     },
     "require-dev": {
@@ -27,7 +27,7 @@
         "psalm/plugin-phpunit": "^0.7.0",
         "symfony/dotenv": "^4.3",
         "symfony/framework-bundle": "^4.3",
-        "symfony/phpunit-bridge": "^4.3",
+        "symfony/phpunit-bridge": "^4.3.4",
         "symfony/yaml": "^4.3",
         "vimeo/psalm": "^3.5"
     },
