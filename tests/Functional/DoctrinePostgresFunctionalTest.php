@@ -81,7 +81,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
                 PHP_EOL,
                 implode("\n - ", $failures),
                 PHP_EOL,
-                $display
+                $display,
             ));
         }
     }

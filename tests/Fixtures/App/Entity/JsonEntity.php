@@ -14,49 +14,42 @@ class JsonEntity
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private ?string $title;
 
     /**
-     * @var array|null
      * @ORM\Column(type="jsonb", nullable=true)
      */
-    private $jsonB = [];
+    private ?array $jsonB = [];
 
     /**
-     * @var array|null
      * @ORM\Column(type="jsonb[]", nullable=true, name="json_b_array")
      */
-    private $jsonBArray = [];
+    private ?array $jsonBArray = [];
 
     /**
-     * @var array|null
      * @ORM\Column(type="smallint[]", nullable=true)
      */
-    private $smallIntArray = [];
+    private ?array $smallIntArray = [];
 
     /**
-     * @var array|null
      * @ORM\Column(type="integer[]", nullable=true)
      */
-    private $integerArray = [];
+    private ?array $integerArray = [];
 
     /**
-     * @var array|null
      * @ORM\Column(type="bigint[]", nullable=true)
      */
-    private $bigIntArray = [];
+    private ?array $bigIntArray = [];
 
     /**
-     * @var array|null
      * @ORM\Column(type="text[]", nullable=true)
      */
-    private $textArray = [];
+    private ?array $textArray = [];
 
     public function getId(): ?int
     {

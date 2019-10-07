@@ -1,6 +1,8 @@
 Doctrine Postgres Bundle
 ========================
 
+**NOTE:** For legacy PHP support (7.2+) please use the 1.0 branch.
+
 This bundle provides Doctrine support for some specific PostgreSQL 9.4+ features for Symfony projects:
 
 - Support of JSONB and some array data-types (at present only integers, TEXT and JSONB)

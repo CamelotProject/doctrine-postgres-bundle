@@ -2,11 +2,11 @@ language: php
 
 matrix:
     include:
-        - php: 7.2
-          env: COMPOSER_FLAGS="--prefer-lowest"
-        - php: 7.3
         - php: 7.4snapshot
-          env: PHPUNIT_FLAGS="--coverage-text --coverage-html coverage/"
+          env: COMPOSER_FLAGS="--prefer-lowest"
+        - php: 7.4snapshot
+        - php: 7.4snapshot
+          env: PHPUNIT_FLAGS="--coverage-text"
         - php: nightly
     fast_finish: true
     allow_failures:

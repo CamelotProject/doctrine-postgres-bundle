@@ -11,8 +11,7 @@ use Symfony\Component\DependencyInjection\Definition;
 
 final class BeforeOptimizationOrmPass implements CompilerPassInterface
 {
-    /** @var Definition|null */
-    private $defaultConfiguration = null;
+    private ?Definition $defaultConfiguration = null;
 
     public function process(ContainerBuilder $container): void
     {
