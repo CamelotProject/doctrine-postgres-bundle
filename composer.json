@@ -1,0 +1,49 @@
+{
+    "name": "camelot/doctrine-postgres-bundle",
+    "description": "PostgreSQL specific functionality for Pentangle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gawain Lynch",
+            "email": "gawain.lynch@gamil.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.2",
+        "ext-pdo_pgsql": "*",
+        "doctrine/dbal": "^2.9",
+        "doctrine/orm": "^2.6",
+        "martin-georgiev/postgresql-for-doctrine": "^1.2"
+    },
+    "require-dev": {
+        "camelot/coding-style": "^2.0",
+        "dama/doctrine-test-bundle": "^6.0",
+        "doctrine/doctrine-cache-bundle": "^1.3.5",
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpunit/phpunit": "^8.4",
+        "psalm/plugin-phpunit": "^0.7.0",
+        "symfony/dotenv": "^4.3",
+        "symfony/framework-bundle": "^4.3",
+        "symfony/phpunit-bridge": "^4.3",
+        "symfony/yaml": "^4.3",
+        "vimeo/psalm": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Camelot\\DoctrinePostgres\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Camelot\\DoctrinePostgres\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "lint": "vendor/bin/php-cs-fixer fix --show-progress=dots",
+        "test": "vendor/bin/phpunit --coverage-text",
+        "sa": "vendor/bin/psalm --show-info=false"
+    }
+}

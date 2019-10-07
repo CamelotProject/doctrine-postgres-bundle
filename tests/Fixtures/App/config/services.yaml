@@ -1,0 +1,18 @@
+parameters:
+
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Camelot\DoctrinePostgres\:
+        resource: '../../../../src/*'
+        exclude: '../../../../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    Camelot\DoctrinePostgres\Tests\DataFixtures\TestFixtures:
+
+    Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository\JsonEntityRepository:
+
+    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:

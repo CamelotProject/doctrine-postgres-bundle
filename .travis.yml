@@ -1,0 +1,30 @@
+language: php
+
+matrix:
+    include:
+        - php: 7.2
+          env: COMPOSER_FLAGS="--prefer-lowest"
+        - php: 7.3
+        - php: 7.4snapshot
+          env: PHPUNIT_FLAGS="--coverage-text --coverage-html coverage/"
+        - php: nightly
+    fast_finish: true
+    allow_failures:
+        - php: nightly
+
+services:
+    - postgresql
+
+before_script:
+    - psql -c 'CREATE DATABASE doctrine_postgres_bundle;' -U postgres
+    - psql -c "CREATE USER doctrine_postgres_bundle WITH ENCRYPTED PASSWORD 'doctrine_postgres_bundle';" -U postgres
+    - psql -c 'ALTER DATABASE doctrine_postgres_bundle OWNER TO doctrine_postgres_bundle;' -U postgres
+    - travis_retry composer self-update
+    - travis_retry composer update --no-interaction --prefer-dist $COMPOSER_FLAGS
+
+script:
+    - vendor/bin/phpunit $PHPUNIT_FLAGS
+
+cache:
+    directories:
+        - $COMPOSER_CACHE_DIR
