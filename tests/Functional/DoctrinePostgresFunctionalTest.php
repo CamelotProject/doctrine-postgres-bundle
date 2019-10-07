@@ -153,6 +153,11 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         yield 'TO_TSVECTOR' => ['to_tsvector', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToTsvector'];
         yield 'TSMATCH' => ['tsmatch', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Tsmatch'];
         yield 'ILIKE' => ['ilike', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Ilike'];
+
+        yield 'CAST' => ['cast', 'Camelot\DoctrinePostgres\DQL\Cast'];
+        yield 'DATE_PART' => ['date_part', 'Camelot\DoctrinePostgres\DQL\DatePart'];
+        yield 'MAKE_DATE' => ['make_date', 'Camelot\DoctrinePostgres\DQL\MakeDate'];
+        yield 'TO_CHAR' => ['to_char', 'Camelot\DoctrinePostgres\DQL\ToChar'];
     }
 
     /**
