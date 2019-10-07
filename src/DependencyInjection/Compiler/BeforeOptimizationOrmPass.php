@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Camelot\DoctrinePostgres\DependencyInjection\Compiler;
 
+use Camelot\DoctrinePostgres\DQL;
 use MartinGeorgiev\Doctrine\ORM\Query\AST\Functions as PostgresFunctions;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -77,6 +78,12 @@ final class BeforeOptimizationOrmPass implements CompilerPassInterface
 
                 // other operators
                 'ILIKE' => PostgresFunctions\Ilike::class,
+
+                // Camelot extensions
+                'CAST' => DQL\Cast::class,
+                'DATE_PART' => DQL\DatePart::class,
+                'MAKE_DATE' => DQL\MakeDate::class,
+                'TO_CHAR' => DQL\ToChar::class,
             ]]);
     }
 

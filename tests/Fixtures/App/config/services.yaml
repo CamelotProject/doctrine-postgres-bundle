@@ -9,7 +9,7 @@ services:
 
     Camelot\DoctrinePostgres\:
         resource: '../../../../src/*'
-        exclude: '../../../../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../../../../src/{DependencyInjection,DQL,Entity,Migrations,Tests,Kernel.php}'
 
     Camelot\DoctrinePostgres\Tests\DataFixtures\TestFixtures:
 
