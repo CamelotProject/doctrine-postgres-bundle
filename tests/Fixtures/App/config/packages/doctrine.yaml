@@ -10,6 +10,6 @@ doctrine:
             TestAppBundle:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/App/Entity'
+                dir: '%kernel.project_dir%/Entity'
                 prefix: 'Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity'
                 alias: TestAppBundle

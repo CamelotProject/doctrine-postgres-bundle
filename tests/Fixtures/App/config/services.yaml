@@ -14,5 +14,3 @@ services:
     Camelot\DoctrinePostgres\Tests\DataFixtures\TestFixtures:
 
     Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository\JsonEntityRepository:
-
-    Doctrine\Bundle\FixturesBundle\Loader\SymfonyFixturesLoader:

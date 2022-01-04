@@ -27,7 +27,7 @@ final class BootstrapTest extends KernelTestCase
         self::assertSame(0, $result);
     }
 
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         return Kernel::class;
     }

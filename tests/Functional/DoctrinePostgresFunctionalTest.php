@@ -10,8 +10,8 @@ use Camelot\DoctrinePostgres\Tests\Fixtures\App\Kernel;
 use Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository\JsonEntityRepository;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -92,14 +92,14 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
     public function testLoadFixtures(): void
     {
         /** @var ManagerRegistry $doctrine */
-        $doctrine = self::$container->get('doctrine');
+        $doctrine = self::getContainer()->get('doctrine');
         /** @var \Doctrine\ORM\EntityManagerInterface $em */
         $em = $doctrine->getManager();
 
         $purger = new ORMPurger($em);
         $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $executor = new ORMExecutor($em, $purger);
-        $executor->execute([self::$container->get(TestFixtures::class)]);
+        $executor->execute([self::getContainer()->get(TestFixtures::class)]);
         $entities = $em->getRepository(JsonEntity::class)->findAll();
 
         self::assertNotEmpty($entities);
@@ -166,7 +166,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
     public function testCustomStringFunctions(string $name, string $class): void
     {
         /** @var ManagerRegistry $doctrine */
-        $doctrine = self::$container->get('doctrine');
+        $doctrine = self::getContainer()->get('doctrine');
         /** @var \Doctrine\ORM\EntityManagerInterface $em */
         $em = $doctrine->getManager();
 
@@ -179,7 +179,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
     public function testILikeQuery(): void
     {
         /** @var JsonEntityRepository $repo */
-        $repo = self::$container->get(JsonEntityRepository::class);
+        $repo = self::getContainer()->get(JsonEntityRepository::class);
         $entities = $repo->findAllLike('%as%');
         $entity = $repo->findOneLike('%as%');
 
@@ -187,7 +187,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         self::assertSame('basalt', $entity->getTitle());
     }
 
-    protected static function getKernelClass()
+    protected static function getKernelClass(): string
     {
         return Kernel::class;
     }

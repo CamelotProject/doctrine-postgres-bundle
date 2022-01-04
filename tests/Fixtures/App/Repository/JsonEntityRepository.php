@@ -6,7 +6,7 @@ namespace Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository;
 
 use Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity\JsonEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method JsonEntity|null find($id, $lockMode = null, $lockVersion = null)

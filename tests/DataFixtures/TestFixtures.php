@@ -6,7 +6,7 @@ namespace Camelot\DoctrinePostgres\Tests\DataFixtures;
 
 use Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity\JsonEntity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 
 final class TestFixtures extends Fixture
 {
