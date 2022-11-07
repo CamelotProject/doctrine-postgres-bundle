@@ -21,7 +21,7 @@ Installation
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require camelot/doctrine-postgres-bundle
+composer require camelot/doctrine-postgres-bundle
 ```
 
 ### Applications that don't use Symfony Flex
