@@ -14,7 +14,7 @@
         "ext-pdo_pgsql": "*",
         "doctrine/dbal": "^2.9 || ^3.0",
         "doctrine/orm": "^2.7 || ^3.0",
-        "martin-georgiev/postgresql-for-doctrine": "^1.5"
+        "martin-georgiev/postgresql-for-doctrine": "^1.5 || ^2"
     },
     "require-dev": {
         "camelot/coding-style": "^3.0",
