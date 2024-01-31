@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository;
+namespace Camelot\DoctrinePostgres\Tests\Fixtures\Repository;
 
-use Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity\JsonEntity;
+use Camelot\DoctrinePostgres\Tests\Fixtures\Entity\JsonEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace Camelot\DoctrinePostgres\Tests\Functional;
 
+use Camelot\DoctrinePostgres\DQL;
 use Camelot\DoctrinePostgres\Tests\DataFixtures\TestFixtures;
-use Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity\JsonEntity;
-use Camelot\DoctrinePostgres\Tests\Fixtures\App\Kernel;
-use Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository\JsonEntityRepository;
+use Camelot\DoctrinePostgres\Tests\Fixtures\Entity\JsonEntity;
+use Camelot\DoctrinePostgres\Tests\Fixtures\Kernel;
+use Camelot\DoctrinePostgres\Tests\Fixtures\Repository\JsonEntityRepository;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Persistence\ManagerRegistry;
+use MartinGeorgiev\Doctrine\ORM\Query\AST\Functions;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use function mb_stripos;
 use const PHP_EOL;
 
-/**
- * @group functional
- */
+#[Group('functional')]
 final class DoctrinePostgresFunctionalTest extends KernelTestCase
 {
     protected function setUp(): void
@@ -29,7 +32,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         self::bootKernel();
     }
 
-    public function providerExpectedTypes(): iterable
+    public static function providerExpectedTypes(): iterable
     {
         yield ['jsonb'];
         yield ['jsonb[]'];
@@ -39,9 +42,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         yield ['text[]'];
     }
 
-    /**
-     * @dataProvider providerExpectedTypes
-     */
+    #[DataProvider('providerExpectedTypes')]
     public function testTypes(string $type): void
     {
         self::assertTrue(Type::hasType($type));
@@ -86,9 +87,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         }
     }
 
-    /**
-     * @depends testCreateExtendedSchema
-     */
+    #[Depends('testCreateExtendedSchema')]
     public function testLoadFixtures(): void
     {
         /** @var ManagerRegistry $doctrine */
@@ -105,64 +104,62 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         self::assertNotEmpty($entities);
     }
 
-    public function providerCustomStringFunctions(): iterable
+    public static function providerCustomStringFunctions(): iterable
     {
-        yield 'ALL_OF' => ['all_of', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\All'];
-        yield 'ANY_OF' => ['any_of', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Any'];
-        yield 'CONTAINS' => ['contains', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Contains'];
-        yield 'IS_CONTAINED_BY' => ['is_contained_by', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\IsContainedBy'];
-        yield 'OVERLAPS' => ['overlaps', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Overlaps'];
-        yield 'GREATEST' => ['greatest', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Greatest'];
-        yield 'LEAST' => ['least', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Least'];
-        yield 'ARRAY_APPEND' => ['array_append', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayAppend'];
-        yield 'ARRAY_CARDINALITY' => ['array_cardinality', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayCardinality'];
-        yield 'ARRAY_CAT' => ['array_cat', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayCat'];
-        yield 'ARRAY_DIMENSIONS' => ['array_dimensions', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayDimensions'];
-        yield 'ARRAY_LENGTH' => ['array_length', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayLength'];
-        yield 'ARRAY_NUMBER_OF_DIMENSIONS' => ['array_number_of_dimensions', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayNumberOfDimensions'];
-        yield 'ARRAY_PREPEND' => ['array_prepend', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayPrepend'];
-        yield 'ARRAY_REMOVE' => ['array_remove', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayRemove'];
-        yield 'ARRAY_REPLACE' => ['array_replace', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayReplace'];
-        yield 'ARRAY_TO_JSON' => ['array_to_json', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayToJson'];
-        yield 'ARRAY_TO_STRING' => ['array_to_string', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ArrayToString'];
-        yield 'STRING_TO_ARRAY' => ['string_to_array', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\StringToArray'];
-        yield 'IN_ARRAY' => ['in_array', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\InArray'];
-        yield 'JSON_ARRAY_LENGTH' => ['json_array_length', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonArrayLength'];
-        yield 'JSON_EACH' => ['json_each', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonEach'];
-        yield 'JSON_EACH_TEXT' => ['json_each_text', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonEachText'];
-        yield 'JSON_GET_FIELD' => ['json_get_field', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetField'];
-        yield 'JSON_GET_FIELD_AS_INTEGER' => ['json_get_field_as_integer', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetFieldAsInteger'];
-        yield 'JSON_GET_FIELD_AS_TEXT' => ['json_get_field_as_text', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetFieldAsText'];
-        yield 'JSON_GET_OBJECT' => ['json_get_object', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetObject'];
-        yield 'JSON_GET_OBJECT_AS_TEXT' => ['json_get_object_as_text', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetObjectAsText'];
-        yield 'JSON_OBJECT_KEYS' => ['json_object_keys', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonObjectKeys'];
-        yield 'JSON_STRIP_NULLS' => ['json_strip_nulls', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonStripNulls'];
-        yield 'TO_JSON' => ['to_json', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJson'];
-        yield 'JSONB_ARRAY_ELEMENTS' => ['jsonb_array_elements', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbArrayElements'];
-        yield 'JSONB_ARRAY_ELEMENTS_TEXT' => ['jsonb_array_elements_text', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbArrayElementsText'];
-        yield 'JSONB_ARRAY_LENGTH' => ['jsonb_array_length', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbArrayLength'];
-        yield 'JSONB_EACH' => ['jsonb_each', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbEach'];
-        yield 'JSONB_EACH_TEXT' => ['jsonb_each_text', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbEachText'];
-        yield 'JSONB_EXISTS' => ['jsonb_exists', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbExists'];
-        yield 'JSONB_INSERT' => ['jsonb_insert', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbInsert'];
-        yield 'JSONB_OBJECT_KEYS' => ['jsonb_object_keys', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbObjectKeys'];
-        yield 'JSONB_SET' => ['jsonb_set', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbSet'];
-        yield 'JSONB_STRIP_NULLS' => ['jsonb_strip_nulls', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonbStripNulls'];
-        yield 'TO_JSONB' => ['to_jsonb', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJsonb'];
-        yield 'TO_TSQUERY' => ['to_tsquery', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToTsquery'];
-        yield 'TO_TSVECTOR' => ['to_tsvector', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToTsvector'];
-        yield 'TSMATCH' => ['tsmatch', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Tsmatch'];
-        yield 'ILIKE' => ['ilike', 'MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Ilike'];
+        yield 'ALL_OF' => ['all_of', Functions\All::class];
+        yield 'ANY_OF' => ['any_of', Functions\Any::class];
+        yield 'CONTAINS' => ['contains', Functions\Contains::class];
+        yield 'IS_CONTAINED_BY' => ['is_contained_by', Functions\IsContainedBy::class];
+        yield 'OVERLAPS' => ['overlaps', Functions\Overlaps::class];
+        yield 'GREATEST' => ['greatest', Functions\Greatest::class];
+        yield 'LEAST' => ['least', Functions\Least::class];
+        yield 'ARRAY_APPEND' => ['array_append', Functions\ArrayAppend::class];
+        yield 'ARRAY_CARDINALITY' => ['array_cardinality', Functions\ArrayCardinality::class];
+        yield 'ARRAY_CAT' => ['array_cat', Functions\ArrayCat::class];
+        yield 'ARRAY_DIMENSIONS' => ['array_dimensions', Functions\ArrayDimensions::class];
+        yield 'ARRAY_LENGTH' => ['array_length', Functions\ArrayLength::class];
+        yield 'ARRAY_NUMBER_OF_DIMENSIONS' => ['array_number_of_dimensions', Functions\ArrayNumberOfDimensions::class];
+        yield 'ARRAY_PREPEND' => ['array_prepend', Functions\ArrayPrepend::class];
+        yield 'ARRAY_REMOVE' => ['array_remove', Functions\ArrayRemove::class];
+        yield 'ARRAY_REPLACE' => ['array_replace', Functions\ArrayReplace::class];
+        yield 'ARRAY_TO_JSON' => ['array_to_json', Functions\ArrayToJson::class];
+        yield 'ARRAY_TO_STRING' => ['array_to_string', Functions\ArrayToString::class];
+        yield 'STRING_TO_ARRAY' => ['string_to_array', Functions\StringToArray::class];
+        yield 'IN_ARRAY' => ['in_array', Functions\InArray::class];
+        yield 'JSON_ARRAY_LENGTH' => ['json_array_length', Functions\JsonArrayLength::class];
+        yield 'JSON_EACH' => ['json_each', Functions\JsonEach::class];
+        yield 'JSON_EACH_TEXT' => ['json_each_text', Functions\JsonEachText::class];
+        yield 'JSON_GET_FIELD' => ['json_get_field', Functions\JsonGetField::class];
+        yield 'JSON_GET_FIELD_AS_INTEGER' => ['json_get_field_as_integer', Functions\JsonGetFieldAsInteger::class];
+        yield 'JSON_GET_FIELD_AS_TEXT' => ['json_get_field_as_text', Functions\JsonGetFieldAsText::class];
+        yield 'JSON_GET_OBJECT' => ['json_get_object', Functions\JsonGetObject::class];
+        yield 'JSON_GET_OBJECT_AS_TEXT' => ['json_get_object_as_text', Functions\JsonGetObjectAsText::class];
+        yield 'JSON_OBJECT_KEYS' => ['json_object_keys', Functions\JsonObjectKeys::class];
+        yield 'JSON_STRIP_NULLS' => ['json_strip_nulls', Functions\JsonStripNulls::class];
+        yield 'TO_JSON' => ['to_json', Functions\ToJson::class];
+        yield 'JSONB_ARRAY_ELEMENTS' => ['jsonb_array_elements', Functions\JsonbArrayElements::class];
+        yield 'JSONB_ARRAY_ELEMENTS_TEXT' => ['jsonb_array_elements_text', Functions\JsonbArrayElementsText::class];
+        yield 'JSONB_ARRAY_LENGTH' => ['jsonb_array_length', Functions\JsonbArrayLength::class];
+        yield 'JSONB_EACH' => ['jsonb_each', Functions\JsonbEach::class];
+        yield 'JSONB_EACH_TEXT' => ['jsonb_each_text', Functions\JsonbEachText::class];
+        yield 'JSONB_EXISTS' => ['jsonb_exists', Functions\JsonbExists::class];
+        yield 'JSONB_INSERT' => ['jsonb_insert', Functions\JsonbInsert::class];
+        yield 'JSONB_OBJECT_KEYS' => ['jsonb_object_keys', Functions\JsonbObjectKeys::class];
+        yield 'JSONB_SET' => ['jsonb_set', Functions\JsonbSet::class];
+        yield 'JSONB_STRIP_NULLS' => ['jsonb_strip_nulls', Functions\JsonbStripNulls::class];
+        yield 'TO_JSONB' => ['to_jsonb', Functions\ToJsonb::class];
+        yield 'TO_TSQUERY' => ['to_tsquery', Functions\ToTsquery::class];
+        yield 'TO_TSVECTOR' => ['to_tsvector', Functions\ToTsvector::class];
+        yield 'TSMATCH' => ['tsmatch', Functions\Tsmatch::class];
+        yield 'ILIKE' => ['ilike', Functions\Ilike::class];
 
-        yield 'CAST' => ['cast', 'Camelot\DoctrinePostgres\DQL\Cast'];
-        yield 'DATE_PART' => ['date_part', 'Camelot\DoctrinePostgres\DQL\DatePart'];
-        yield 'MAKE_DATE' => ['make_date', 'Camelot\DoctrinePostgres\DQL\MakeDate'];
-        yield 'TO_CHAR' => ['to_char', 'Camelot\DoctrinePostgres\DQL\ToChar'];
+        yield 'CAST' => ['cast', DQL\Cast::class];
+        yield 'DATE_PART' => ['date_part', DQL\DatePart::class];
+        yield 'MAKE_DATE' => ['make_date', DQL\MakeDate::class];
+        yield 'TO_CHAR' => ['to_char', DQL\ToChar::class];
     }
 
-    /**
-     * @dataProvider providerCustomStringFunctions
-     */
+    #[DataProvider('providerCustomStringFunctions')]
     public function testCustomStringFunctions(string $name, string $class): void
     {
         /** @var ManagerRegistry $doctrine */
@@ -173,22 +170,29 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         static::assertSame($class, $em->getConfiguration()->getCustomStringFunction($name));
     }
 
-    /**
-     * @depends testLoadFixtures
-     */
-    public function testILikeQuery(): void
+    public static function providerILikeQuery(): iterable
+    {
+        yield ['basalt', '%as%'];
+        yield ['basalt', '%As%'];
+        yield ['basalt', '%aS%'];
+        yield ['basalt', '%AS%'];
+
+        yield ['gabbro', '%bb%'];
+        yield ['gabbro', '%Bb%'];
+        yield ['gabbro', '%bB%'];
+        yield ['gabbro', '%BB%'];
+    }
+
+    #[Depends('testLoadFixtures')]
+    #[DataProvider('providerILikeQuery')]
+    public function testILikeQuery(string $title, string $query): void
     {
         /** @var JsonEntityRepository $repo */
         $repo = self::getContainer()->get(JsonEntityRepository::class);
-        $entities = $repo->findAllLike('%as%');
-        $entity = $repo->findOneLike('%as%');
+        $entities = $repo->findAllLike($query);
+        $entity = $repo->findOneLike($query);
 
         self::assertCount(1, $entities);
-        self::assertSame('basalt', $entity->getTitle());
-    }
-
-    protected static function getKernelClass(): string
-    {
-        return Kernel::class;
+        self::assertSame($title, $entity->getTitle());
     }
 }

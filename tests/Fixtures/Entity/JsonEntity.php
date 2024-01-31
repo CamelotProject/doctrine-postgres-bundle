@@ -1,54 +1,37 @@
 <?php
 
-namespace Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity;
+namespace Camelot\DoctrinePostgres\Tests\Fixtures\Entity;
 
+use Camelot\DoctrinePostgres\Tests\Fixtures\Repository\JsonEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="Camelot\DoctrinePostgres\Tests\Fixtures\App\Repository\JsonEntityRepository")
- */
+#[ORM\Entity(repositoryClass: JsonEntityRepository::class)]
 class JsonEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
+    #[ORM\Column(type: 'integer')]
     private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $title;
 
-    /**
-     * @ORM\Column(type="jsonb", nullable=true)
-     */
+    #[ORM\Column(type: 'jsonb', nullable: true)]
     private ?array $jsonB = [];
 
-    /**
-     * @ORM\Column(type="jsonb[]", nullable=true, name="json_b_array")
-     */
+    #[ORM\Column(name: 'json_b_array', type: 'jsonb[]', nullable: true)]
     private ?array $jsonBArray = [];
 
-    /**
-     * @ORM\Column(type="smallint[]", nullable=true)
-     */
+    #[ORM\Column(type: 'smallint[]', nullable: true)]
     private ?array $smallIntArray = [];
 
-    /**
-     * @ORM\Column(type="integer[]", nullable=true)
-     */
+    #[ORM\Column(type: 'integer[]', nullable: true)]
     private ?array $integerArray = [];
 
-    /**
-     * @ORM\Column(type="bigint[]", nullable=true)
-     */
+    #[ORM\Column(type: 'bigint[]', nullable: true)]
     private ?array $bigIntArray = [];
 
-    /**
-     * @ORM\Column(type="text[]", nullable=true)
-     */
+    #[ORM\Column(type: 'text[]', nullable: true)]
     private ?array $textArray = [];
 
     public function getId(): ?int

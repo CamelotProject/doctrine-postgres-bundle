@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Camelot\DoctrinePostgres\Tests\DataFixtures;
 
-use Camelot\DoctrinePostgres\Tests\Fixtures\App\Entity\JsonEntity;
+use Camelot\DoctrinePostgres\Tests\Fixtures\Entity\JsonEntity;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
