@@ -153,7 +153,6 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         yield 'TSMATCH' => ['tsmatch', Functions\Tsmatch::class];
         yield 'ILIKE' => ['ilike', Functions\Ilike::class];
 
-        yield 'CAST' => ['cast', DQL\Cast::class];
         yield 'DATE_PART' => ['date_part', DQL\DatePart::class];
         yield 'MAKE_DATE' => ['make_date', DQL\MakeDate::class];
         yield 'TO_CHAR' => ['to_char', DQL\ToChar::class];

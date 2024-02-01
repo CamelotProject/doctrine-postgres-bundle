@@ -79,7 +79,6 @@ final class BeforeOptimizationOrmPass implements CompilerPassInterface
                 'ILIKE' => PostgresFunctions\Ilike::class,
 
                 // Camelot extensions
-                'CAST' => DQL\Cast::class,
                 'DATE_PART' => DQL\DatePart::class,
                 'MAKE_DATE' => DQL\MakeDate::class,
                 'TO_CHAR' => DQL\ToChar::class,

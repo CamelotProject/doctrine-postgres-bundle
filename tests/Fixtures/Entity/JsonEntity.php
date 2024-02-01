@@ -5,6 +5,7 @@ namespace Camelot\DoctrinePostgres\Tests\Fixtures\Entity;
 use Camelot\DoctrinePostgres\Tests\Fixtures\Repository\JsonEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/** @internal */
 #[ORM\Entity(repositoryClass: JsonEntityRepository::class)]
 class JsonEntity
 {
