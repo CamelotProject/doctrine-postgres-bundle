@@ -11,20 +11,37 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class BeforeOptimizationDbalPass implements CompilerPassInterface
 {
+    use ConfigTrait;
+
+    private const TYPES_FACTORY = 'doctrine.dbal.connection_factory.types';
+
+    private array $types = [
+        'jsonb' => PostgresTypes\Jsonb::class,
+        'jsonb[]' => PostgresTypes\JsonbArray::class,
+        'smallint[]' => PostgresTypes\SmallIntArray::class,
+        'integer[]' => PostgresTypes\IntegerArray::class,
+        'bigint[]' => PostgresTypes\BigIntArray::class,
+        'text[]' => PostgresTypes\TextArray::class,
+    ];
+
     public function process(ContainerBuilder $container): void
     {
-        $arr = [
-            'jsonb' => PostgresTypes\Jsonb::class,
-            'jsonb[]' => PostgresTypes\JsonbArray::class,
-            'smallint[]' => PostgresTypes\SmallIntArray::class,
-            'integer[]' => PostgresTypes\IntegerArray::class,
-            'bigint[]' => PostgresTypes\BigIntArray::class,
-            'text[]' => PostgresTypes\TextArray::class,
-        ];
-        $types = new ArrayCollection($container->getParameter('doctrine.dbal.connection_factory.types'));
-        foreach ($arr as $name => $class) {
-            $types->set($name, ['class' => $class, 'commented' => false]);
+        if (!$container->hasParameter(self::TYPES_FACTORY)) {
+            return;
         }
-        $container->setParameter('doctrine.dbal.connection_factory.types', $types->toArray());
+
+        $config = $this->getConfig($container);
+        $types = new ArrayCollection($container->getParameter(self::TYPES_FACTORY));
+
+        foreach ($config['types'] as $name => $enabled) {
+            if (!isset($this->types[$name])) {
+                throw new \RuntimeException(sprintf('Unknown DBAL type "%s"', $name));
+            }
+
+            if ($enabled && !$types->containsKey($name)) {
+                $types->set($name, ['class' => $this->types[$name]]);
+            }
+        }
+        $container->setParameter(self::TYPES_FACTORY, $types->toArray());
     }
 }
