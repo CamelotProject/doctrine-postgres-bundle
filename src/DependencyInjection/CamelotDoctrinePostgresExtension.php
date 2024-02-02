@@ -16,7 +16,7 @@ final class CamelotDoctrinePostgresExtension extends Extension implements Prepen
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__) . '/Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__, 2) . '/config'));
         $loader->load('services.xml');
     }
 
