@@ -17,10 +17,10 @@ class JsonEntity
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $title;
 
-    #[ORM\Column(type: 'jsonb', nullable: true)]
+    #[ORM\Column(type: 'json', options: ['jsonb' => true])]
     private ?array $jsonB = [];
 
-    #[ORM\Column(name: 'json_b_array', type: 'jsonb[]', nullable: true)]
+    #[ORM\Column(name: 'jsonb_array', type: 'jsonb[]', nullable: true)]
     private ?array $jsonBArray = [];
 
     #[ORM\Column(type: 'smallint[]', nullable: true)]

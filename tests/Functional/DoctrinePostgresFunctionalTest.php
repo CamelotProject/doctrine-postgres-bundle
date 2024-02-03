@@ -52,8 +52,7 @@ final class DoctrinePostgresFunctionalTest extends KernelTestCase
         $display = $commandTester->getDisplay();
 
         $expected = [
-            'json_b jsonb DEFAULT NULL',
-            'json_b_array jsonb[] DEFAULT NULL',
+            'jsonb_array jsonb[] DEFAULT NULL',
             'small_int_array smallint[] DEFAULT NULL',
             'integer_array integer[] DEFAULT NULL',
             'big_int_array bigint[] DEFAULT NULL',
