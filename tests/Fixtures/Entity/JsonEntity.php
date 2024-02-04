@@ -23,6 +23,9 @@ class JsonEntity
     #[ORM\Column(name: 'jsonb_array', type: 'jsonb[]', nullable: true)]
     private ?array $jsonBArray = [];
 
+    #[ORM\Column(type: 'bool[]', nullable: true)]
+    private ?array $boolArray = [];
+
     #[ORM\Column(type: 'smallint[]', nullable: true)]
     private ?array $smallIntArray = [];
 
@@ -72,6 +75,18 @@ class JsonEntity
     public function setJsonBArray(?array $jsonBArray): self
     {
         $this->jsonBArray = $jsonBArray;
+
+        return $this;
+    }
+
+    public function getBoolArray(): ?array
+    {
+        return $this->boolArray;
+    }
+
+    public function setBoolArray(?array $boolArray): self
+    {
+        $this->boolArray = $boolArray;
 
         return $this;
     }

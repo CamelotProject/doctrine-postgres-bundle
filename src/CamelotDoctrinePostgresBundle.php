@@ -37,6 +37,7 @@ final class CamelotDoctrinePostgresBundle extends AbstractBundle
                 ->arrayNode('types')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->booleanNode('bool[]')->defaultFalse()->end()
                         ->booleanNode('jsonb[]')->defaultFalse()->end()
                         ->booleanNode('smallint[]')->defaultFalse()->end()
                         ->booleanNode('integer[]')->defaultFalse()->end()
@@ -139,6 +140,7 @@ final class CamelotDoctrinePostgresBundle extends AbstractBundle
             }
 
             $addedTypes[$type] = match (true) {
+                $type === 'bool[]' => Postgres\Types\BooleanArray::class,
                 $type === 'smallint[]' => Postgres\Types\SmallIntArray::class,
                 $type === 'integer[]' => Postgres\Types\IntegerArray::class,
                 $type === 'bigint[]' => Postgres\Types\BigIntArray::class,

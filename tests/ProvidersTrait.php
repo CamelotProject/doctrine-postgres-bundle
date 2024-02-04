@@ -12,6 +12,7 @@ trait ProvidersTrait
 {
     public static function providerTypes(): iterable
     {
+        yield ['bool[]', Types\BooleanArray::class];
         yield ['jsonb[]', Types\JsonbArray::class];
         yield ['smallint[]', Types\SmallIntArray::class];
         yield ['integer[]', Types\IntegerArray::class];

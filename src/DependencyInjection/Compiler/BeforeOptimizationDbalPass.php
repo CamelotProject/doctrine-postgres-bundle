@@ -16,6 +16,7 @@ final class BeforeOptimizationDbalPass implements CompilerPassInterface
     private const TYPES_FACTORY = 'doctrine.dbal.connection_factory.types';
 
     private array $types = [
+        'bool[]' => PostgresTypes\BooleanArray::class,
         'jsonb[]' => PostgresTypes\JsonbArray::class,
         'smallint[]' => PostgresTypes\SmallIntArray::class,
         'integer[]' => PostgresTypes\IntegerArray::class,

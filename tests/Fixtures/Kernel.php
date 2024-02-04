@@ -77,6 +77,7 @@ class Kernel extends BaseKernel
                 'postgis' => false,
             ],
             'types' => [
+                'bool[]' => true,
                 'jsonb[]' => true,
                 'smallint[]' => true,
                 'integer[]' => true,
