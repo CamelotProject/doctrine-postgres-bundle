@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Camelot\DoctrinePostgres\Tests\Fixtures;
 
 use Camelot\DoctrinePostgres\CamelotDoctrinePostgresBundle;
-use Camelot\DoctrinePostgres\Tests\DataFixtures\TestFixtures;
-use Camelot\DoctrinePostgres\Tests\Fixtures\Repository\JsonEntityRepository;
+use Camelot\DoctrinePostgres\Tests\DataFixtures;
 use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
@@ -23,7 +22,7 @@ class Kernel extends BaseKernel
 
     public function getProjectDir(): string
     {
-        return dirname(__DIR__, 2);
+        return \dirname(__DIR__, 2);
     }
 
     public function registerBundles(): iterable
@@ -143,7 +142,8 @@ class Kernel extends BaseKernel
             ->autowire(true)
             ->public()
         ;
-        $services->set(TestFixtures::class);
-        $services->set(JsonEntityRepository::class);
+        $services->set(DataFixtures\ArrayFixtures::class);
+        $services->set(DataFixtures\DateFixtures::class);
+        $services->set(DataFixtures\TextFixtures::class);
     }
 }

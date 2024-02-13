@@ -1,24 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Camelot\DoctrinePostgres\Tests\Fixtures\Entity;
 
-use Camelot\DoctrinePostgres\Tests\Fixtures\Repository\JsonEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /** @internal */
-#[ORM\Entity(repositoryClass: JsonEntityRepository::class)]
-class JsonEntity
+#[ORM\Entity()]
+class ArrayEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column(type: 'integer')]
     private ?int $id;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $title;
-
-    #[ORM\Column(type: 'json', options: ['jsonb' => true])]
-    private ?array $jsonB = [];
 
     #[ORM\Column(name: 'jsonb_array', type: 'jsonb[]', nullable: true)]
     private ?array $jsonBArray = [];
@@ -41,30 +36,6 @@ class JsonEntity
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    public function getJsonB(): ?array
-    {
-        return $this->jsonB;
-    }
-
-    public function setJsonB(?array $jsonB): self
-    {
-        $this->jsonB = $jsonB;
-
-        return $this;
     }
 
     public function getJsonBArray(): ?array
