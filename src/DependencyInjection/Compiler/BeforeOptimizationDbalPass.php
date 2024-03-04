@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Camelot\DoctrinePostgres\DependencyInjection\Compiler;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Jsor\Doctrine\PostGIS;
 use MartinGeorgiev\Doctrine\DBAL\Types as PostgresTypes;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +23,8 @@ final class BeforeOptimizationDbalPass implements CompilerPassInterface
         'integer[]' => PostgresTypes\IntegerArray::class,
         'bigint[]' => PostgresTypes\BigIntArray::class,
         'text[]' => PostgresTypes\TextArray::class,
+        'geography' => PostGIS\Types\GeographyType::class,
+        'geometry' => PostGIS\Types\GeometryType::class,
     ];
 
     public function process(ContainerBuilder $container): void
